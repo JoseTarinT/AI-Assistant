@@ -1,7 +1,7 @@
 # AI Takehome Assessment 
 
 ## Background
-The in-house legal team at a Acme Corp recieves are a large volume of diverse internal legal-related requests from within a company. These requests are triaged to a member of the legal team who is responsible for that kind of request e.g sales contracts, employment matters, travel expenses. Occassionally who is responsible for what changes as members are reshuffled and people join and leave the team.
+The in-house legal team at Acme Corp recieves are a large volume of diverse internal legal-related requests from within a company. These requests are triaged to a member of the legal team who is responsible for that kind of request e.g sales contracts, employment matters, travel expenses. Occassionally who is responsible for what changes as members are reshuffled and people join and leave the team.
 
 The way requests are triaged can also depend on different properties of the request. For example a sales contract review can be assigned to John@acme.corp if the requestor is from Australia but assigned to Jane@acme.corp if the requestor is from the United states. Combinations of these conditions can be used to triage a request e.g "Location is Australia and Department is Finance".
 

@@ -64,7 +64,6 @@ app.get('/health', (_req: Request, res: Response) => {
 });
 
 app.post('/api/chat', async (req: Request, res: Response) => {
-  console.log("here")
   if (!process.env.OPENAI_API_KEY) {
     res.status(500).json({ error: 'Server missing OpenAI credentials' });
     return;

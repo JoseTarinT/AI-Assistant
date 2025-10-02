@@ -1,7 +1,7 @@
-import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
-import ChatPage from './pages/ChatPage';
-import ConfigurePage from './pages/ConfigurePage';
-import './App.css';
+import { NavLink, Navigate, Route, Routes } from "react-router-dom";
+import ChatPage from "./pages/ChatPage";
+import ConfigurePage from "./pages/ConfigurePage";
+import "./App.css";
 
 export default function App() {
   return (
@@ -9,10 +9,16 @@ export default function App() {
       <nav className="app-nav">
         <h2>Legal frontdoor</h2>
         <div className="nav-links">
-          <NavLink to="/chat" className={({ isActive }) => (isActive ? 'active' : '')}>
+          <NavLink
+            to="/chat"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
             Chat
           </NavLink>
-          <NavLink to="/configure" className={({ isActive }) => (isActive ? 'active' : '')}>
+          <NavLink
+            to="/configure"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
             Configure
           </NavLink>
         </div>
