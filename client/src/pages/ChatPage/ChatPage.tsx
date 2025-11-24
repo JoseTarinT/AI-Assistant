@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import styles from "./ChatPage.module.css";
+import { useChat } from "../../context/ChatContext";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5000";
@@ -27,11 +28,23 @@ const createMessage = (overrides?: Partial<ChatMessage>): ChatMessage => ({
 });
 
 export default function ChatPage() {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  // const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const { messages, setMessages, addMessage } = useChat();
+
+  const newConversation = () => {
+    if (isStreaming) return;
+    // clear in-memory messages
+    setMessages([]);
+    // remove persisted conversation if present (key used by ChatContext)
+    localStorage.removeItem("chat_messages");
+
+    setInput("");
+    setError(null);
+  };
 
   const canSubmit = useMemo(
     () => input.trim().length > 0 && !isStreaming,
@@ -134,6 +147,13 @@ export default function ChatPage() {
     <div className={styles.chatPage}>
       <header className={styles.chatHeader}>
         <h1>Frontdoor</h1>
+        <button
+          className={styles.newConversationButton}
+          onClick={newConversation}
+          disabled={isStreaming}
+        >
+          New Conversation
+        </button>
       </header>
 
       <div className={styles.chatWindow}>
