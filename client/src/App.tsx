@@ -1,6 +1,6 @@
 import { NavLink, Navigate, Route, Routes } from "react-router-dom";
-import ChatPage from "./pages/ChatPage";
-import ConfigurePage from "./pages/ConfigurePage";
+import ChatPage from "./pages/ChatPage/ChatPage";
+import ConfigurePage from "./pages/ConfigurePage/ConfigurePage";
 import "./App.css";
 
 export default function App() {

@@ -1,0 +1,30 @@
+[
+  {
+    "conditions": {
+      "type": "Sales contract",
+      "location": "Australia"
+    },
+    "assignee": "xyz@acme.corp"
+  },
+  {
+    "conditions": {
+      "type": "NDA contract",
+      "location": "Australia"
+    },
+    "assignee": "jkl@acme.corp"
+  },
+  {
+    "conditions": {
+      "type": "Employment offer contract",
+      "location": "United States"
+    },
+    "assignee": "abc@acme.corp"
+  },
+  {
+    "conditions": {
+      "type": "test contract",
+      "location": "Canada"
+    },
+    "assignee": "test@acme.corp"
+  }
+]

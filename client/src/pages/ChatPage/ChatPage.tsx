@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
+import styles from "./ChatPage.module.css";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5000";
@@ -130,18 +131,23 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="chat-page">
-      <header className="chat-header">
+    <div className={styles.chatPage}>
+      <header className={styles.chatHeader}>
         <h1>Frontdoor</h1>
       </header>
 
-      <div className="chat-window">
+      <div className={styles.chatWindow}>
         {messages.length === 0 && (
-          <p className="placeholder">No messages yet... Make a request!</p>
+          <p className={styles.placeholder}>
+            How can I assist you with your legal requests today?
+          </p>
         )}
         {messages.map((message) => (
-          <div key={message.id} className={`message message-${message.role}`}>
-            <span className="message-role">
+          <div
+            key={message.id}
+            className={`${styles.message} ${styles[`message-${message.role}`]}`}
+          >
+            <span className={styles.messageRole}>
               {message.role === "user" ? "You" : "Assistant"}
             </span>
             <p>
@@ -153,9 +159,9 @@ export default function ChatPage() {
         <div ref={messagesEndRef} />
       </div>
 
-      {error && <div className="chat-error">{error}</div>}
+      {error && <div className={styles.chatError}>{error}</div>}
 
-      <form className="chat-input" onSubmit={handleSubmit}>
+      <form className={styles.chatInput} onSubmit={handleSubmit}>
         <input
           id="chat-input"
           type="text"
