@@ -13,6 +13,9 @@ type TriageRule = {
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ?? "http://localhost:5000";
 
+const isValidEmail = (email: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+
 export default function ConfigurePage() {
   const [rules, setRules] = useState<TriageRule[]>([]);
   const [toast, setToast] = useState<{
@@ -32,9 +35,22 @@ export default function ConfigurePage() {
 
   useEffect(() => {
     const fetchConfig = async () => {
-      const response = await fetch(`${API_BASE_URL}/api/configure`);
-      const data = await response.json();
-      setRules(data.rules || []);
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/configure`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch rules: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setRules(data.rules || []);
+      } catch (error) {
+        console.error("Error fetching config:", error);
+        setToast({
+          message:
+            error instanceof Error ? error.message : "Failed to load rules",
+          type: "error",
+        });
+        setTimeout(() => setToast(null), 3000);
+      }
     };
     fetchConfig();
   }, []);
@@ -49,6 +65,17 @@ export default function ConfigurePage() {
   };
 
   const save = async () => {
+    if (editingIndex !== null) {
+      const current = rules[editingIndex];
+      if (current.assignee && !isValidEmail(current.assignee)) {
+        setToast({
+          message: `The assignee must be a valid email`,
+          type: "error",
+        });
+        setTimeout(() => setToast(null), 3000);
+        return;
+      }
+    }
     try {
       const response = await fetch(`${API_BASE_URL}/api/configure`, {
         method: "POST",
@@ -58,6 +85,9 @@ export default function ConfigurePage() {
         body: JSON.stringify(rules),
       });
       if (!response.ok) {
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.statusText}`);
+        }
         setToast({ message: "Failed to save rules", type: "error" });
         return;
       }
@@ -112,14 +142,20 @@ export default function ConfigurePage() {
 
   const deleteRule = async (index: number) => {
     try {
+      const updatedRules = rules.filter((_, i) => i !== index);
       const response = await fetch(`${API_BASE_URL}/api/configure`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(rules.filter((_, i) => i !== index)),
+        body: JSON.stringify(updatedRules),
       });
-      setRules(rules.filter((_, i) => i !== index));
+      if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+
+      setRules(updatedRules);
+      // Check that the ref array matches new rules length
+      inputRef.current = inputRef.current.filter((_, i) => i !== index);
+
       setToast({ message: "Rule deleted successfully!", type: "success" });
     } catch (error) {
       console.error(error);
