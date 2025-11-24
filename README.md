@@ -1,4 +1,4 @@
-# AI Takehome Assessment 
+# AI Assistan
 
 ## Background
 The in-house legal team at Acme Corp recieves are a large volume of diverse internal legal-related requests from within a company.
@@ -26,8 +26,7 @@ Combinations of these conditions can be used to triage a request e.g "Location i
 Traditionally this has all been facilitated through email and members of the legal team at Acme often find themselves having to manually triage requests to the correct team member. As you can imagine this is a painstaking process...
 
 
-## Scope
-> :gem: **Use of AI to help you code and brainstorm is encouraged!**
+## Use Case
 
 Build an AI Agent proof of concept that will act as a 'frontdoor' for employees at Acme to send legal requests to. The way this AI Agent triages various types of requests must be configurable. 
 
@@ -46,27 +45,12 @@ AI Agent: "Where are you based?"
 Requestor: "United States"
 AI Agent: "Please email abc@acme.corp for approval of your contract."
 ```
-We have provided you a lightweight chat app scaffold, feel free to make as many changes to it as you like. Also feel free to to install any additional package or any use any third party providers/APIs. The only constraints are:
-- Keep the stack the same i.e Typescript, React frontend, NodeJS express backend. 
 - The webapp should have the following routes: 
   - `localhost:5173/chat` the chat interface, where requestor's enter their request. 
   - `localhost:5173/configure` where admins configure how requests are triaged and who they triaged to.  
 
-## Out of Scope
-We only want to solve the core problem at hand. Examples of things that are out of scope: 
-- Authentication. 
-- Deployment. 
-- Unit tests. 
 
-
-## What we are looking for
-This assessment is intentionally open ended. We're looking for the following:
-- Strong software engineering fundementals - code quality and system design.
-- Experience in building AI applications. 'LLM literacy'.
-- Product and Design sense i.e the ability to make sensible UX choices. 
-
-
-## Project scaffold Structure
+## Project Structure
 
 > :bulb: The current scaffold utilizes OpenAI's GPT-OSS120b model from groq (A fast inference API with limited free access) Click [here](https://groq.com/) to register an account.
 
@@ -109,6 +93,7 @@ A two-part web application consisting of a TypeScript React frontend and a TypeS
    The React app will be available at the URL Vite prints (typically `http://localhost:5173`).
 
 
-## Lastly
-We can't wait to see what you come up with! For any questions feel free to reach out to vince.mu@checkbox.ai
- 
+## Create Rules
+- You can create rules in the `Configure` page.
+- Click in add rules, fill the fields and click `save`
+- Once you have some rules, test the chat.
