@@ -71,17 +71,26 @@ export const health = (_req: Request, res: Response) => {
 };
 
 export const getRules = async (req: Request, res: Response) => {
-  const getRules = await loadRules();
-  res.json({ rules: getRules });
+  try {
+    const rulesList = await loadRules();
+    res.json({ rules: rulesList });
+  } catch (error) {
+    console.error("Error loading rules:", error);
+    res.status(500).json({ error: "Failed to load rules" });
+  }
 };
 
 export const setRules = async (req: Request, res: Response) => {
-  const rules = req.body;
-  saveRules(rules);
-  res.json({ status: "success" });
+  try {
+    const rules = req.body;
+    saveRules(rules);
+    res.json({ status: "success" });
+  } catch (error) {
+    console.error("Error saving rules:", error);
+    res.status(500).json({ error: "Failed to save rules" });
+  }
 };
 
-// router.post("/api/chat",
 export const sendChat = async (req: Request, res: Response) => {
   if (!process.env.OPENAI_API_KEY) {
     res.status(500).json({ error: "Server missing OpenAI credentials" });
@@ -100,7 +109,7 @@ export const sendChat = async (req: Request, res: Response) => {
     content: message.content,
   }));
 
-  const rules = loadRules();
+  const rules = await loadRules();
   const systemPrompt = buildSystemPrompt(rules);
 
   let stream: Stream<ResponseStreamEvent> | null = null;
